@@ -1,27 +1,55 @@
+num_red = 12
+num_green = 13
+num_blue = 14
+
 def read_file_line_by_line(file_path):
     try:
         with open(file_path, 'r') as file:
-            count = 1 
+            sum = 0
             for line in file:
-                split_line(count, line)
-                count += 1
-                print("LINE:" + line.strip())  # strip() removes leading and trailing whitespaces
+                id = int(line.split(':')[0].split(' ')[1].strip())
+                print(f'Id = {id}')
+                valid = split_line(line.split(':')[1].strip())
+                if valid == True:
+                    sum = sum + id
+            print(f'Sum = {sum}')
+           
     except FileNotFoundError:
         print(f"The file {file_path} does not exist.")
     except Exception as e:
         print(f"An error occurred: {e}")
 
-def split_line(line_num, line):
-   
+def split_line(line):
+    red = 0
+    green = 0
+    blue = 0
     # Split each line by ';'
     try:
-        parts = line.strip().split(';')
-        print(f'Line: {line_num}: ')
-        for part in parts:
-            print(f'Part {part}')
+        print(f'{line}')
+        grabs = line.strip().split(';')
+        for grab in grabs:
+#            print(f'Grab {grab}')
+            color_counts = grab.strip().split(',')
+            for color_count in color_counts:
+#                print(f'Color Count {color_count}')
+                color_count_split = color_count.strip().split(' ')
+ #              print(f'Color Split {color_count_split}')
+                color = color_count_split[1].lower()  # Convert to lowercase for case-insensitivity
+                if color == "red":
+                    red = int(color_count_split[0])
+                elif color == "green":
+                    green = int(color_count_split[0])
+                elif color == "blue":
+                    blue = int(color_count_split[0])
+                else:
+                    print(f"Index 1 has an unrecognized color: {color}, {grabs}")
+            if red > num_red or green > num_green or blue > num_blue:
+                return False
     except Exception as e:
         print(f"An error occurred: {e}")
-
+        return False
+    print("Valid")
+    return True
 
 # Example usage:
 file_path = "./input.txt"
