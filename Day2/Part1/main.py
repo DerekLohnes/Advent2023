@@ -19,17 +19,20 @@ def read_file_line_by_line(file_path):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-def split_line(line):
+def split_line(game):
     red = 0
     green = 0
     blue = 0
+    red_min = -1
+    green_min = -1
+    blue_min = -1
     # Split each line by ';'
     try:
-        print(f'{line}')
-        grabs = line.strip().split(';')
-        for grab in grabs:
+        print(f'{game}')
+        role = game.strip().split(';')
+        for role in role:
 #            print(f'Grab {grab}')
-            color_counts = grab.strip().split(',')
+            color_counts = role.strip().split(',')
             for color_count in color_counts:
 #                print(f'Color Count {color_count}')
                 color_count_split = color_count.strip().split(' ')
